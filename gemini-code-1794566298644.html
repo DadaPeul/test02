@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dada Peul - Pulaar, Culture & Sénégal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00853F;
+            --secondary: #FDEF42;
+            --accent: #E31B23;
+            --dark: #1E293B;
+            --light: #F8FAFC;
+            --white: #FFFFFF;
+            --gray: #64748B;
+            --border: #E2E8F0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--light); color: var(--dark); min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 90px; }
+        
+        header {
+            position: relative;
+            background: linear-gradient(rgba(0, 30, 15, 0.45), rgba(0, 30, 15, 0.7)), url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1000&auto=format&fit=crop&q=80') center/cover no-repeat;
+            color: var(--white); padding: 32px 20px 26px; text-align: center; border-bottom: 6px solid var(--secondary);
+        }
+        .senegal-bar {
+            position: absolute; top: 0; left: 0; right: 0; height: 12px;
+            background: linear-gradient(90deg, var(--primary) 33.33%, var(--secondary) 33.33% 66.66%, var(--accent) 66.66%);
+            z-index: 2;
+        }
+        .logo-container {
+            display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px;
+            background: var(--white); color: var(--accent); border-radius: 50%; font-size: 26px; font-weight: 800;
+            margin-bottom: 6px; border: 3px solid var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+        
+        .header-weather {
+            display: inline-flex; align-items: center; gap: 12px; background: rgba(0, 0, 0, 0.65);
+            border: 1.5px solid rgba(255, 255, 255, 0.4); padding: 7px 18px; border-radius: 20px; font-size: 13px; backdrop-filter: blur(6px);
+        }
+        
+        main { flex: 1; max-width: 750px; width: 100%; margin: 0 auto; padding: 20px 16px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 14px; font-size: 12px; font-weight: 700; background: #E8F5E9; color: var(--primary); }
+        .pill-accent { background: #FFF5F5; color: var(--accent); }
+        .pill-gold { background: #FFFDE7; color: #857800; }
+
+        .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; margin-top: 15px; }
+        .home-pill-card {
+            background: var(--white); border: 2px solid var(--border); border-radius: var(--radius);
+            padding: 20px 15px; text-align: center; cursor: pointer; box-shadow: var(--shadow); transition: 0.2s;
+        }
+        .home-pill-card:hover { transform: translateY(-3px); border-color: var(--primary); }
+        .home-pill-icon { font-size: 32px; margin-bottom: 8px; }
+        .home-pill-title { font-size: 14px; font-weight: 700; color: var(--dark); }
+
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-bottom: 20px; }
+        .category-pill-btn {
+            background: var(--white); border: 2px solid var(--border); padding: 10px 12px;
+            border-radius: var(--radius); font-size: 12px; font-weight: 700; color: var(--gray); cursor: pointer; text-align: center; transition: 0.2s;
+        }
+        .category-pill-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .category-pill-btn.active { background: var(--dark); color: var(--white); border-color: var(--dark); }
+
+        .search-box { width: 100%; padding: 12px 16px; border-radius: var(--radius); border: 2px solid var(--border); font-size: 15px; margin-bottom: 16px; outline: none; background: var(--white); }
+        .search-box:focus { border-color: var(--primary); }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .lexicon-card { background: var(--white); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); border: 1px solid var(--border); position: relative; }
+        .card-word { font-size: 20px; font-weight: 800; color: var(--dark); margin: 8px 0 2px; }
+        .card-phonetic { font-size: 13px; color: var(--gray); font-style: italic; margin-bottom: 8px; }
+        .card-translation { font-size: 15px; font-weight: 700; color: var(--accent); border-top: 1px dashed var(--border); padding-top: 8px; margin-top: 8px; }
+        .card-example { font-size: 12px; color: var(--gray); background: var(--light); padding: 8px 12px; border-radius: 8px; margin-top: 8px; }
+
+        .audio-btn {
+            position: absolute; top: 16px; right: 16px; background: #E8F5E9; color: var(--primary);
+            border: none; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+        }
+
+        .recipe-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 24px; border: 1px solid var(--border); }
+        .recipe-img { width: 100%; height: 200px; object-fit: cover; }
+        .recipe-header { background: linear-gradient(135deg, var(--accent), #b51219); color: var(--white); padding: 16px 20px; }
+        .ingredients-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 16px; }
+        .ingredient-pill { background: var(--light); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+        .recipe-steps ol { padding-left: 20px; line-height: 1.7; font-size: 14px; }
+        .recipe-steps li { margin-bottom: 8px; }
+
+        .story-card { background: var(--white); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+
+        .converter-card { background: var(--white); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); max-width: 450px; margin: 0 auto; }
+        .converter-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        .converter-row { display: flex; align-items: center; background: var(--light); border: 2px solid var(--border); border-radius: 12px; overflow: hidden; }
+        .converter-input { width: 100%; padding: 12px; border: none; background: transparent; font-size: 18px; font-weight: 700; outline: none; }
+        .converter-unit { padding: 0 16px; font-weight: 800; color: var(--gray); font-size: 16px; }
+
+        .quiz-card { background: var(--white); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); max-width: 500px; margin: 0 auto; text-align: center; }
+        .quiz-option { background: var(--light); border: 2px solid var(--border); padding: 12px; border-radius: 20px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .quiz-option:hover { border-color: var(--primary); background: #E8F5E9; }
+
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; background: var(--white);
+            display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); z-index: 99;
+        }
+        .nav-item { display: flex; flex-direction: column; align-items: center; background: none; border: none; color: var(--gray); font-size: 10px; font-weight: 600; cursor: pointer; gap: 4px; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item span.icon { font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="senegal-bar"></div>
+
+    <header>
+        <div class="logo-container">D</div>
+        <h1>Dada Peul</h1>
+        <div class="header-weather">
+            <span>📍 Popenguine</span>
+            <span id="weatherTempHeader" style="font-weight: 700; color: var(--secondary);">--°C</span>
+            <span id="weatherWindHeader" style="opacity: 0.95; font-size: 12px;">Vent: -- km/h</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- ACCUEIL -->
+        <div id="home" class="tab-content active">
+            <h2 style="font-size: 20px; margin-bottom: 8px;">Bienvenue sur Dada Peul !</h2>
+            <p style="font-size: 14px; color: var(--gray); margin-bottom: 20px;">Sélectionnez une thématique ci-dessous pour commencer :</p>
+            <div class="home-grid">
+                <div class="home-pill-card" onclick="switchTab('lexicon')"><div class="home-pill-icon">📖</div><div class="home-pill-title">Lexique Pulaar</div></div>
+                <div class="home-pill-card" onclick="switchTab('phrases')"><div class="home-pill-icon">💬</div><div class="home-pill-title">Phrases</div></div>
+                <div class="home-pill-card" onclick="switchTab('converter')"><div class="home-pill-icon">💶</div><div class="home-pill-title">Convertisseur</div></div>
+                <div class="home-pill-card" onclick="switchTab('recipes')"><div class="home-pill-icon">🍲</div><div class="home-pill-title">Recettes</div></div>
+                <div class="home-pill-card" onclick="switchTab('stories')"><div class="home-pill-icon">📚</div><div class="home-pill-title">Contes</div></div>
+                <div class="home-pill-card" onclick="switchTab('quiz')"><div class="home-pill-icon">🎯</div><div class="home-pill-title">Quiz</div></div>
+            </div>
+        </div>
+
+        <!-- LEXIQUE -->
+        <div id="lexicon" class="tab-content">
+            <input type="text" id="searchInput" class="search-box" placeholder="Rechercher un mot..." oninput="filterLexicon()">
+            <div class="categories-grid">
+                <div class="category-pill-btn active" onclick="filterCategory('all', this)">⭐ Tous</div>
+                <div class="category-pill-btn" onclick="filterCategory('Salutations', this)">👋 Salutations</div>
+                <div class="category-pill-btn" onclick="filterCategory('Famille', this)">👨‍👩‍👧 Famille</div>
+                <div class="category-pill-btn" onclick="filterCategory('Transports', this)">🚗 Transports</div>
+                <div class="category-pill-btn" onclick="filterCategory('Cuisine', this)">🍲 Cuisine</div>
+                <div class="category-pill-btn" onclick="filterCategory('Santé', this)">🏥 Santé</div>
+                <div class="category-pill-btn" onclick="filterCategory('Météo', this)">☀️ Météo</div>
+                <div class="category-pill-btn" onclick="filterCategory('Sport', this)">⚽ Sport</div>
+                <div class="category-pill-btn" onclick="filterCategory('Vêtements', this)">👕 Vêtements</div>
+            </div>
+            <div id="lexiconContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- PHRASES -->
+        <div id="phrases" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px;">💬 Phrases Courantes</h2>
+            <div id="phrasesContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- CONVERTISSEUR -->
+        <div id="converter" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px; text-align: center;">💱 Convertisseur de Devises</h2>
+            <div class="converter-card">
+                <div class="converter-group">
+                    <label style="font-size: 13px; font-weight:700; color:var(--primary);">Euros (€)</label>
+                    <div class="converter-row"><input type="text" id="eurInput" class="converter-input" placeholder="Ex: 10" oninput="convertEurToFcfa()"><span class="converter-unit">€</span></div>
+                </div>
+                <div style="text-align: center; font-size: 22px; margin: 5px 0; color:var(--gray);">⇅</div>
+                <div class="converter-group">
+                    <label style="font-size: 13px; font-weight:700; color:var(--accent);">Francs CFA (FCFA)</label>
+                    <div class="converter-row"><input type="text" id="fcfaInput" class="converter-input" placeholder="Ex: 6 560" oninput="convertFcfaToEur()"><span class="converter-unit">FCFA</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECETTES -->
+        <div id="recipes" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px;">🍲 Recettes & Boissons</h2>
+            <div id="recipesContainer"></div>
+        </div>
+
+        <!-- CONTES -->
+        <div id="stories" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px;">📚 Contes Sénégalais</h2>
+            <div id="storiesContainer"></div>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz" class="tab-content">
+            <div class="quiz-card">
+                <h3 id="quizQuestion" style="font-size: 18px; margin-bottom: 10px;">Chargement...</h3>
+                <p id="quizScore" style="font-size: 13px; color: var(--gray); margin-bottom: 15px;"></p>
+                <div id="quizOptions"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- NAVIGATION BASSE -->
+    <div class="bottom-nav">
+        <button class="nav-item active" onclick="switchTab('home')"><span class="icon">🏠</span>Accueil</button>
+        <button class="nav-item" onclick="switchTab('lexicon')"><span class="icon">📖</span>Lexique</button>
+        <button class="nav-item" onclick="switchTab('phrases')"><span class="icon">💬</span>Phrases</button>
+        <button class="nav-item" onclick="switchTab('recipes')"><span class="icon">🍲</span>Recettes</button>
+        <button class="nav-item" onclick="switchTab('stories')"><span class="icon">📚</span>Contes</button>
+        <button class="nav-item" onclick="switchTab('quiz')"><span class="icon">🎯</span>Quiz</button>
+    </div>
+
+    <script>
+        const lexiconData = [
+            { category: "Salutations", word: "Jam ñallin", phonetic: "[ Jam ñallin ]", translation: "Bonjour / Paix sur la journée", example: "Salutation générale." },
+            { category: "Salutations", word: "Aɗa selli ?", phonetic: "[ A-da selli ? ]", translation: "Comment vas-tu ?", example: "Es-tu en bonne santé ?" },
+            { category: "Salutations", word: "Jam tan", phonetic: "[ Jam tan ]", translation: "Je vais bien", example: "Réponse classique." },
+            { category: "Salutations", word: "A jaaraama", phonetic: "[ A jaaraama ]", translation: "Merci", example: "Pour exprimer sa gratitude." },
+            { category: "Salutations", word: "Jam hiiri", phonetic: "[ Jam hii-ri ]", translation: "Bonsoir", example: "Fin d'après-midi." },
+            { category: "Salutations", word: "Mbalen jam", phonetic: "[ Mba-len jam ]", translation: "Bonne nuit", example: "Nuit paisible." },
+            { category: "Salutations", word: "Ndaaraama", phonetic: "[ Ndaa-raa-ma ]", translation: "Bienvenue", example: "Accueil chaleureux." },
+            { category: "Salutations", word: "Taa yaawo", phonetic: "[ Taa yaa-wo ]", translation: "À bientôt", example: "Au revoir." },
+            { category: "Salutations", word: "Jaaraama e gollal", phonetic: "[ Jaa-raa-ma e gol-lal ]", translation: "Bravo pour le travail", example: "Encouragement." },
+            { category: "Salutations", word: "No wa'i?", phonetic: "[ No wa-i? ]", translation: "Comment ça va ?", example: "Formule informelle." },
+            { category: "Salutations", word: "Selli jam?", phonetic: "[ Sel-li jam? ]", translation: "La santé va bien ?", example: "Nouvelles de la santé." },
+            { category: "Salutations", word: "Awa", phonetic: "[ A-wa ]", translation: "D'accord", example: "Accord." },
+            { category: "Salutations", word: "Mido hinoo", phonetic: "[ Mi-do hi-noo ]", translation: "S'il te plaît", example: "Politesse." },
+            { category: "Salutations", word: "Acce haala am", phonetic: "[ Ac-ce haa-la am ]", translation: "Pardon", example: "S'excuser." },
+            { category: "Salutations", word: "Yo Allah okku jam", phonetic: "[ Yo Al-lah ok-ku jam ]", translation: "Que Dieu donne la paix", example: "Bénédiction." },
+
+            { category: "Famille", word: "Baaba", phonetic: "[ Baaba ]", translation: "Père", example: "Mon père." },
+            { category: "Famille", word: "Inna / Nene", phonetic: "[ Inna / Nene ]", translation: "Mère", example: "Ma mère." },
+            { category: "Famille", word: "Ɓiɗɗo", phonetic: "[ Bi-d-ɗo ]", translation: "Enfant", example: "Garçon ou fille." },
+            { category: "Famille", word: "Miñiraawo", phonetic: "[ Mi-nyi-raa-wo ]", translation: "Frère ou Sœur cadette", example: "Cadet." },
+            { category: "Famille", word: "Kawu", phonetic: "[ Ka-wu ]", translation: "Oncle maternel", example: "Famille." },
+            { category: "Famille", word: "Gorko", phonetic: "[ Gor-ko ]", translation: "Homme / Époux", example: "Mari." },
+            { category: "Famille", word: "Debbo", phonetic: "[ Deb-bo ]", translation: "Femme / Épouse", example: "Femme." },
+            { category: "Famille", word: "Bappaññe", phonetic: "[ Bap-pa-ññe ]", translation: "Oncle paternel", example: "Frère du père." },
+            { category: "Famille", word: "Mamma", phonetic: "[ Mam-ma ]", translation: "Grand-mère", example: "Grand-mère." },
+            { category: "Famille", word: "Taaniraawo", phonetic: "[ Taa-ni-raa-wo ]", translation: "Petit-enfant", example: "Descendance." },
+            { category: "Famille", word: "Majiaro", phonetic: "[ Ma-jia-ro ]", translation: "Aîné", example: "Premier-né." },
+            { category: "Famille", word: "Mbeba", phonetic: "[ Mbe-ba ]", translation: "Bébé", example: "Nouveau-né." },
+            { category: "Famille", word: "Soraawo", phonetic: "[ So-raa-wo ]", translation: "Grand-père", example: "Patriarche." },
+            { category: "Famille", word: "Musidɗo", phonetic: "[ Mu-sid-ɗo ]", translation: "Ami / Proche", example: "Lien fort." },
+            { category: "Famille", word: "Saare", phonetic: "[ Saa-re ]", translation: "La concession", example: "Foyer." },
+
+            { category: "Transports", word: "Looto", phonetic: "[ Looto ]", translation: "Voiture", example: "Véhicule." },
+            { category: "Transports", word: "Laawol", phonetic: "[ Laaa-wol ]", translation: "La route", example: "Chemin." },
+            { category: "Transports", word: "Puskool", phonetic: "[ Pus-kool ]", translation: "Vélo", example: "Bicyclette." },
+            { category: "Transports", word: "Kumbowal", phonetic: "[ Kum-bo-wal ]", translation: "Pirogue", example: "Bateau." },
+            { category: "Transports", word: "Sareet", phonetic: "[ Sa-reet ]", translation: "Charrette", example: "Traction." },
+            { category: "Transports", word: "Njaareendi", phonetic: "[ Njaa-reen-di ]", translation: "Le sable", example: "Piste." },
+            { category: "Transports", word: "Arraade", phonetic: "[ Ar-raa-de ]", translation: "Arriver", example: "Arrivée." },
+            { category: "Transports", word: "Yahaade", phonetic: "[ Ya-haa-de ]", translation: "Partir", example: "Voyager." },
+            { category: "Transports", word: "Teggedere", phonetic: "[ Teg-ge-de-re ]", translation: "Le billet", example: "Ticket." },
+            { category: "Transports", word: "Gare", phonetic: "[ Ga-re ]", translation: "La gare", example: "Station." },
+            { category: "Transports", word: "Passe", phonetic: "[ Pas-se ]", translation: "Le prix du trajet", example: "Tarif." },
+            { category: "Transports", word: "Doggoowo", phonetic: "[ Dog-goo-wo ]", translation: "Le chauffeur", example: "Conducteur." },
+            { category: "Transports", word: "Mota", phonetic: "[ Mo-ta ]", translation: "La moto", example: "Deux roues." },
+            { category: "Transports", word: "Saliade", phonetic: "[ Sa-lia-de ]", translation: "S'arrêter", example: "Arrêt." },
+            { category: "Transports", word: "Diwgal", phonetic: "[ Diw-gal ]", translation: "L'avion", example: "Vol." },
+
+            { category: "Cuisine", word: "Ceebu Jën", phonetic: "[ Thieboudienne ]", translation: "Riz au poisson", example: "Plat national." },
+            { category: "Cuisine", word: "Kosam", phonetic: "[ Ko-sam ]", translation: "Lait caillé", example: "Traditionnel." },
+            { category: "Cuisine", word: "Maaro", phonetic: "[ Maa-ro ]", translation: "Le riz", example: "Base." },
+            { category: "Cuisine", word: "Liddi", phonetic: "[ Lid-di ]", translation: "Le poisson", example: "Frais." },
+            { category: "Cuisine", word: "Tewu", phonetic: "[ Te-wu ]", translation: "La viande", example: "Bœuf." },
+            { category: "Cuisine", word: "Ndiyam", phonetic: "[ Ndi-yam ]", translation: "L'eau", example: "Potable." },
+            { category: "Cuisine", word: "Ataaya", phonetic: "[ A-taa-ya ]", translation: "Le thé", example: "Rituel." },
+            { category: "Cuisine", word: "Bissap", phonetic: "[ Bis-sap ]", translation: "Jus d'hibiscus", example: "Boisson." },
+            { category: "Cuisine", word: "Mbakko", phonetic: "[ Mbak-ko ]", translation: "La sauce", example: "Accompagnement." },
+            { category: "Cuisine", word: "Mburu", phonetic: "[ Mbu-ru ]", translation: "Le pain", example: "Chaud." },
+            { category: "Cuisine", word: "Lamɗam", phonetic: "[ Lam-ɗam ]", translation: "Le sel", example: "Assaisonnement." },
+            { category: "Cuisine", word: "Suppu", phonetic: "[ Sup-pu ]", translation: "La soupe", example: "Bouillon." },
+            { category: "Cuisine", word: "Ñebbe", phonetic: "[ Ñeb-be ]", translation: "Les haricots", example: "Niébé." },
+            { category: "Cuisine", word: "Maro-haako", phonetic: "[ Ma-ro haa-ko ]", translation: "Riz aux feuilles", example: "Savoureux." },
+            { category: "Cuisine", word: "Kani", phonetic: "[ Ka-ni ]", translation: "Le piment", example: "Fort." },
+
+            { category: "Santé", word: "Jam", phonetic: "[ Jam ]", translation: "La santé", example: "Paix." },
+            { category: "Santé", word: "Cellal", phonetic: "[ Cel-lal ]", translation: "Bonne forme", example: "Guéri." },
+            { category: "Santé", word: "Owwere", phonetic: "[ Ow-we-re ]", translation: "La fièvre", example: "Température." },
+            { category: "Santé", word: "Loki", phonetic: "[ Lo-ki ]", translation: "La blessure", example: "Coupure." },
+            { category: "Santé", word: "Safaara", phonetic: "[ Sa-faa-ra ]", translation: "Le médicament", example: "Traitement." },
+            { category: "Santé", word: "Doctor", phonetic: "[ Dok-tor ]", translation: "Le médecin", example: "Docteur." },
+            { category: "Santé", word: "Ospital", phonetic: "[ Os-pi-tal ]", translation: "L'hôpital", example: "Centre de soins." },
+            { category: "Santé", word: "Muusu", phonetic: "[ Muu-su ]", translation: "La douleur", example: "Mal." },
+            { category: "Santé", word: "Hoore muusi", phonetic: "[ Hoo-re muu-si ]", translation: "Mal de tête", example: "Céphale." },
+            { category: "Santé", word: "Reedu muusi", phonetic: "[ Ree-du muu-si ]", translation: "Mal de ventre", example: "Ventre." },
+            { category: "Santé", word: "Ɗojjuru", phonetic: "[ Ɗoj-ju-ru ]", translation: "La toux", example: "Tousser." },
+            { category: "Santé", word: "Peyuri", phonetic: "[ Pe-yu-ri ]", translation: "Le rhume", example: "Froid." },
+            { category: "Santé", word: "Bandaes", phonetic: "[ Ban-daes ]", translation: "Le pansement", example: "Protection." },
+            { category: "Santé", word: "Ñawu", phonetic: "[ Ña-wu ]", translation: "La maladie", example: "Pathologie." },
+            { category: "Santé", word: "Yamɗitinde", phonetic: "[ Yam-ɗi-tin-de ]", translation: "Guérir", example: "Santé retrouvée." },
+
+            { category: "Météo", word: "Naange", phonetic: "[ Naan-ge ]", translation: "Le soleil", example: "Brillant." },
+            { category: "Météo", word: "Tinuede", phonetic: "[ Ti-nue-de ]", translation: "La pluie", example: "Averse." },
+            { category: "Météo", word: "Hendu", phonetic: "[ Hen-du ]", translation: "Le vent", example: "Breeze." },
+            { category: "Météo", word: "Ruulde", phonetic: "[ Ruul-de ]", translation: "Le nuage", example: "Couvert." },
+            { category: "Météo", word: "Nguleefi", phonetic: "[ Ngu-lee-fi ]", translation: "La chaleur", example: "Chaud." },
+            { category: "Météo", word: "Jangol", phonetic: "[ Jan-gol ]", translation: "Le froid", example: "Fraîcheur." },
+            { category: "Météo", word: "Dabooru", phonetic: "[ Da-boo-ru ]", translation: "La tempête", example: "Orage." },
+            { category: "Météo", word: "Ndabbi", phonetic: "[ Ndab-bi ]", translation: "Hivernage", example: "Saison des pluies." },
+            { category: "Météo", word: "Ceedu", phonetic: "[ Cee-du ]", translation: "Saison sèche", example: "Soleil." },
+            { category: "Météo", word: "Kammu", phonetic: "[ Kam-mu ]", translation: "Le ciel", example: "Bleu." },
+            { category: "Météo", word: "Felo", phonetic: "[ Fe-lo ]", translation: "L'éclair", example: "Lumière." },
+            { category: "Météo", word: "Riggaango", phonetic: "[ Rig-gaan-go ]", translation: "Le tonnerre", example: "Bruit." },
+            { category: "Météo", word: "Sollaawol", phonetic: "[ Sol-laa-wol ]", translation: "La poussière", example: "Harmattan." },
+            { category: "Météo", word: "Mbellu", phonetic: "[ Mbel-lu ]", translation: "L'ombre", example: "Frais." },
+            { category: "Météo", word: "Aasaman", phonetic: "[ Aa-sa-man ]", translation: "Le temps", example: "Climat." },
+
+            { category: "Sport", word: "Bolol", phonetic: "[ Bo-lol ]", translation: "Le ballon / Le football", example: "Jouer au ballon." },
+            { category: "Sport", word: "Kopat", phonetic: "[ Ko-pat ]", translation: "La compétition / Le match", example: "Match de foot." },
+            { category: "Sport", word: "Dogdu", phonetic: "[ Dog-du ]", translation: "La course", example: "Courir vite." },
+            { category: "Sport", word: "Ñootol", phonetic: "[ Ñoo-tol ]", translation: "La natation", example: "Nager dans l'eau." },
+            { category: "Sport", word: "Wude", phonetic: "[ Wu-de ]", translation: "La lutte traditionnelle", example: "Lutte sénégalaise." },
+            { category: "Sport", word: "Pijirgol", phonetic: "[ Pi-jir-gol ]", translation: "Le jeu / Le sport", example: "Faire du sport." },
+            { category: "Sport", word: "Kappitano", phonetic: "[ Kap-pi-ta-no ]", translation: "Le capitaine", example: "Chef d'équipe." },
+            { category: "Sport", word: "Koolol", phonetic: "[ Koo-lol ]", translation: "L'équipe", example: "Notre équipe." },
+            { category: "Sport", word: "Ndennda", phonetic: "[ Ndenn-da ]", translation: "Gagner / La victoire", example: "Nous avons gagné." },
+            { category: "Sport", word: "Waasde", phonetic: "[ Waas-de ]", translation: "Perdre", example: "Défaite." },
+            { category: "Sport", word: "Arbitru", phonetic: "[ Ar-bi-tru ]", translation: "L'arbitre", example: "Juge sportif." },
+            { category: "Sport", word: "Stad", phonetic: "[ Stad ]", translation: "Le stade", example: "Terrain de sport." },
+            { category: "Sport", word: "Fitina", phonetic: "[ Fi-ti-na ]", translation: "L'énergie / La forme", example: "Être en forme." },
+            { category: "Sport", word: "Mbaawka", phonetic: "[ Mbaaw-ka ]", translation: "La force / Puissance", example: "Puissance physique." },
+            { category: "Sport", word: "Weltaare", phonetic: "[ Wel-taa-re ]", translation: "La joie / La fête", example: "Joie après le match." },
+
+            { category: "Vêtements", word: "Bubu", phonetic: "[ Bu-bu ]", translation: "Le boubou traditionnel", example: "Grand boubou élégant." },
+            { category: "Vêtements", word: "Kori", phonetic: "[ Ko-ri ]", translation: "Le tissu / Pagne", example: "Tissu coloré." },
+            { category: "Vêtements", word: "Suudu", phonetic: "[ Suu-du ]", translation: "L'habit / Vêtement", example: "S'habiller." },
+            { category: "Vêtements", word: "Ceecal", phonetic: "[ Cee-cal ]", translation: "Le pantalon", example: "Pantalon large." },
+            { category: "Vêtements", word: "Kamis", phonetic: "[ Ka-mis ]", translation: "La chemise", example: "Chemise homme." },
+            { category: "Vêtements", word: "Sarax", phonetic: "[ Sa-rax ]", translation: "Le foulard / Coiffe", example: "Foulard de tête." },
+            { category: "Vêtements", word: "Pustal", phonetic: "[ Pus-tal ]", translation: "Les chaussures", example: "Chaussures en cuir." },
+            { category: "Vêtements", word: "Sandala", phonetic: "[ San-da-la ]", translation: "La sandale", example: "Sandale d'été." },
+            { category: "Vêtements", word: "Golle", phonetic: "[ Gol-le ]", translation: "Le bonnet", example: "Bonnet traditionnel peul." },
+            { category: "Vêtements", word: "Ceet", phonetic: "[ Ceet ]", translation: "La ceinture", example: "Ceinture en cuir." },
+            { category: "Vêtements", word: "Mbasu", phonetic: "[ Mba-su ]", translation: "Le chapeau", example: "Protection solaire." },
+            { category: "Vêtements", word: "Wutturu", phonetic: "[ Wut-tu-ru ]", translation: "La jupe", example: "Vêtement féminin." },
+            { category: "Vêtements", word: "Ngalu", phonetic: "[ Nga-lu ]", translation: "La veste / Manteau", example: "Vêtement chaud." },
+            { category: "Vêtements", word: "Jollar", phonetic: "[ Jol-lar ]", translation: "La parure / Bijou", example: "Ornements en or." },
+            { category: "Vêtements", word: "Faat", phonetic: "[ Faat ]", translation: "Le grand châle", example: "Châle traditionnel." }
+        ];
+
+        const phrasesData = [
+            { category: "Rencontre", word: "Miyan ko hono miɗo nodirtee?", phonetic: "[ Miyan ko hono mi-ɗo no-dir-tee? ]", translation: "Comment t'appelles-tu ?", example: "Pour faire connaissance." },
+            { category: "Rencontre", word: "Innde am ko...", phonetic: "[ In-nde am ko... ]", translation: "Je m'appelle...", example: "Se présenter." },
+            { category: "Politesse", word: "No mbori?", phonetic: "[ No mbo-ri? ]", translation: "Comment ça va / C'est joli ?", example: "Salutation amicale." },
+            { category: "Politesse", word: "Allah jaɓu", phonetic: "[ Al-lah ja-ɓu ]", translation: "Que Dieu accepte (Merci / De rien)", example: "Formule de remerciement." },
+            { category: "Marché", word: "Pake nii ko jelu?", phonetic: "[ Pa-ke nii ko je-lu? ]", translation: "Combien ça coûte ?", example: "Au marché." },
+            { category: "Marché", word: "Saama", phonetic: "[ Saa-ma ]", translation: "C'est cher !", example: "Négocier le prix." },
+            { category: "Voyage", word: "Hol to laawol ngol woni?", phonetic: "[ Hol to laa-wol ngol wo-ni? ]", translation: "Où est la route ?", example: "Demander son chemin." },
+            { category: "Quotidien", word: "Mido beela", phonetic: "[ Mi-do bee-la ]", translation: "J'ai faim", example: "Avant de manger." },
+            { category: "Quotidien", word: "Mido yoora", phonetic: "[ Mi-do yoo-ra ]", translation: "J'ai soif", example: "Demander de l'eau." },
+            { category: "Quotidien", word: "Hol sariya?", phonetic: "[ Hol sa-ri-ya? ]", translation: "Quelle heure est-il ?", example: "Demander l'heure." },
+            { category: "Quotidien", word: "Mido yaha wuro", phonetic: "[ Mi-do ya-ha wu-ro ]", translation: "Je rentre au village / à la maison", example: "Fin de journée." },
+            { category: "Quotidien", word: "Kono ko moƴƴi", phonetic: "[ Ko-no ko mo-ññi ]", translation: "C'est très bien / Magnifique", example: "Appréciation." },
+            { category: "Quotidien", word: "Teeŋi", phonetic: "[ Tee-ñi ]", translation: "C'est important", example: "Insister sur un point." },
+            { category: "Quotidien", word: "Mido yiɗi ma", phonetic: "[ Mi-do yii-di ma ]", translation: "Je t'aime / Je t'apprécie", example: "Marque d'affection." },
+            { category: "Quotidien", word: "Faamii ?", phonetic: "[ Faa-mii? ]", translation: "Tu as compris ?", example: "Vérifier la compréhension." },
+            { category: "Quotidien", word: "Mi faamii", phonetic: "[ Mi faa-mii ]", translation: "J'ai compris", example: "Réponse affirmative." },
+            { category: "Quotidien", word: "Mi faamaa", phonetic: "[ Mi faa-maa ]", translation: "Je n'ai pas compris", example: "Demander de répéter." },
+            { category: "Quotidien", word: "Woto hul", phonetic: "[ Wo-to hul ]", translation: "N'aie pas peur / Courage", example: "Réconforter quelqu'un." },
+            { category: "Quotidien", word: "Jam tan wa'i", phonetic: "[ Jam tan wa-i ]", translation: "Tout va bien, que la paix", example: "Rassurer." },
+            { category: "Quotidien", word: "Goonga", phonetic: "[ Goon-ga ]", translation: "C'est la vérité", example: "Confirmer un fait." }
+        ];
+
+        const recipesData = [
+            {
+                title: "Ceebu Jën (Thieboudienne Rouge)", wolof: "Plat National du Sénégal", servings: "4 pers.", time: "1h30",
+                img: "https://images.unsplash.com/photo-1541529086526-db283c563270?w=600&auto=format&fit=crop&q=80",
+                ingredients: ["Riz brisé", "Poisson Thiof", "Tomate concentrée", "Huile d'arachide", "Manioc, Carottes, Chou"],
+                steps: ["Préparer le Roff (ail, persil, piment).", "Frire le poisson.", "Confectionner la sauce tomate avec les légumes.", "Cuire le riz dans le bouillon."]
+            },
+            {
+                title: "Yassa Poulet au Citron", wolof: "Yassa Genaal", servings: "4 pers.", time: "50 min",
+                img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&auto=format&fit=crop&q=80",
+                ingredients: ["Poulet", "Oignons émincés", "Citrons verts", "Moutarde", "Ail"],
+                steps: ["Mariner le poulet.", "Griller les morceaux.", "Confire les oignons.", "Mijoter le tout."]
+            },
+            {
+                title: "Mafé d'Arachide", wolof: "Maffi Hakko", servings: "4 pers.", time: "1h10",
+                img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+                ingredients: ["Bœuf", "Pâte d'arachide", "Tomate", "Légumes variés"],
+                steps: ["Saisir la viande.", "Ajouter le bouillon et la pâte d'arachide.", "Mijoter à feu doux."]
+            },
+            {
+                title: "Thiakry (Couscous de Mil)", wolof: "Thiakry", servings: "4 pers.", time: "30 min",
+                img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80",
+                ingredients: ["Couscous de mil", "Lait caillé (Kosam)", "Lait concentré", "Vanille"],
+                steps: ["Cuire le mil à la vapeur.", "Mélanger avec les laits et la vanille.", "Servir bien frais."]
+            }
+        ];
+
+        const storiesData = [
+            { title: "Koumbis le Lièvre et le Baobab", moral: "L'intelligence triomphe.", text: "Dans la savane assoiffée, l'hyène gardait la source. Koumbis le lièvre, rusé, se déguisa en génie protecteur pour effrayer l'hyène et libérer l'eau pour tous les animaux." },
+            { title: "Amadou et la Falaise de Popenguine", moral: "Respecter la nature.", text: "Amadou nettoyait chaque jour le grand baobab de la falaise. En récompense, l'arbre magique offrit de quoi nourrir tout son village." }
+        ];
+
+        let currentCategory = 'all';
+        let quizScoreVal = 0;
+        let currentQuizIndex = 0;
+
+        async function fetchPopenguineWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=14.55&longitude=-17.11&current_weather=true');
+                const data = await res.json();
+                document.getElementById('weatherTempHeader').innerText = `${Math.round(data.current_weather.temperature)}°C`;
+                document.getElementById('weatherWindHeader').innerText = `Vent: ${Math.round(data.current_weather.windspeed)} km/h`;
+            } catch (e) {
+                document.getElementById('weatherTempHeader').innerText = "28°C";
+                document.getElementById('weatherWindHeader').innerText = "Vent: 15 km/h";
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+
+            const navs = document.querySelectorAll('.bottom-nav .nav-item');
+            if(tabId === 'home') navs[0].classList.add('active');
+            if(tabId === 'lexicon') navs[1].classList.add('active');
+            if(tabId === 'phrases') navs[2].classList.add('active');
+            if(tabId === 'recipes') navs[3].classList.add('active');
+            if(tabId === 'stories') navs[4].classList.add('active');
+            if(tabId === 'quiz') navs[5].classList.add('active');
+
+            if (tabId === 'lexicon') renderLexicon();
+            if (tabId === 'phrases') renderPhrases();
+            if (tabId === 'recipes') renderRecipes();
+            if (tabId === 'stories') renderStories();
+            if (tabId === 'quiz') initQuiz();
+        }
+
+        function formatNumber(num) { return isNaN(num) ? '' : num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
+        function convertEurToFcfa() {
+            const eur = parseFloat(document.getElementById('eurInput').value.replace(/\s/g, ''));
+            document.getElementById('fcfaInput').value = isNaN(eur) ? '' : formatNumber(Math.round(eur * 655.957));
+        }
+        function convertFcfaToEur() {
+            const fcfa = parseFloat(document.getElementById('fcfaInput').value.replace(/\s/g, ''));
+            document.getElementById('eurInput').value = isNaN(fcfa) ? '' : formatNumber((fcfa / 655.957).toFixed(2));
+        }
+
+        function filterCategory(cat, element) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-pill-btn').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+            renderLexicon();
+        }
+
+        function renderLexicon() {
+            const container = document.getElementById('lexiconContainer');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = lexiconData.filter(item => {
+                const matchesCat = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.word.toLowerCase().includes(search) || item.translation.toLowerCase().includes(search);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color:var(--gray); grid-column: 1/-1; padding:30px;">Aucun mot trouvé.</p>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => `
+                <div class="lexicon-card">
+                    <button class="audio-btn" onclick="speakText('${item.word}')">🔊</button>
+                    <span class="pill">${item.category}</span>
+                    <div class="card-word">${item.word}</div>
+                    <div class="card-phonetic">${item.phonetic}</div>
+                    <div class="card-translation">${item.translation}</div>
+                    <div class="card-example">💡 ${item.example}</div>
+                </div>
+            `).join('');
+        }
+
+        function filterLexicon() { renderLexicon(); }
+
+        function renderPhrases() {
+            document.getElementById('phrasesContainer').innerHTML = phrasesData.map(item => `
+                <div class="lexicon-card">
+                    <button class="audio-btn" onclick="speakText('${item.word}')">🔊</button>
+                    <span class="pill pill-gold">${item.category}</span>
+                    <div class="card-word" style="font-size: 18px;">${item.word}</div>
+                    <div class="card-phonetic">${item.phonetic}</div>
+                    <div class="card-translation">${item.translation}</div>
+                    <div class="card-example">💡 ${item.example}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderRecipes() {
+            document.getElementById('recipesContainer').innerHTML = recipesData.map(r => `
+                <div class="recipe-card">
+                    <img src="${r.img}" alt="${r.title}" class="recipe-img">
+                    <div class="recipe-header">
+                        <h3 style="font-size: 18px; margin-bottom: 2px;">${r.title}</h3>
+                        <p style="font-size: 12px; opacity: 0.9;">Tradition : ${r.wolof}</p>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="display:flex; gap:8px; margin-bottom:12px;">
+                            <span class="pill pill-accent">👥 ${r.servings}</span>
+                            <span class="pill pill-gold">⏱️ ${r.time}</span>
+                        </div>
+                        <div style="font-size: 12px; font-weight:700; color:var(--primary); text-transform:uppercase;">Ingrédients :</div>
+                        <div class="ingredients-pills">${r.ingredients.map(ing => `<span class="ingredient-pill">${ing}</span>`).join('')}</div>
+                        <div style="font-size: 12px; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:8px;">Préparation :</div>
+                        <div class="recipe-steps"><ol>${r.steps.map(s => `<li>${s}</li>`).join('')}</ol></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderStories() {
+            document.getElementById('storiesContainer').innerHTML = storiesData.map(s => `
+                <div class="story-card">
+                    <h3 style="font-size: 18px; color:var(--dark); margin-bottom:8px;">${s.title}</h3>
+                    <p style="font-size: 14px; line-height: 1.6; color: var(--gray); margin-bottom: 12px;">${s.text}</p>
+                    <span class="pill pill-gold">✨ Morale : ${s.moral}</span>
+                </div>
+            `).join('');
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
+            }
+        }
+
+        function initQuiz() { loadQuizQuestion(); }
+        function loadQuizQuestion() {
+            if (currentQuizIndex >= lexiconData.length) currentQuizIndex = 0;
+            const q = lexiconData[currentQuizIndex];
+            let wrong = lexiconData.filter(i => i.translation !== q.translation).sort(() => 0.5 - Math.random()).slice(0, 3).map(i => i.translation);
+            let options = [...wrong, q.translation].sort(() => 0.5 - Math.random());
+
+            document.getElementById('quizQuestion').innerText = `Que signifie "${q.word}" ?`;
+            document.getElementById('quizScore').innerText = `Score : ${quizScoreVal} pts`;
+            document.getElementById('quizOptions').innerHTML = options.map(opt => `
+                <div class="quiz-option" onclick="checkAnswer('${opt.replace(/'/g, "\\'")}', '${q.translation.replace(/'/g, "\\'")}')">${opt}</div>
+            `).join('');
+        }
+
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                quizScoreVal += 10;
+                alert("Bravo ! Bonne réponse 🎉");
+            } else {
+                alert(`Dommage ! C'était : ${correct}`);
+            }
+            currentQuizIndex++;
+            loadQuizQuestion();
+        }
+
+        fetchPopenguineWeather();
+        renderLexicon();
+        renderPhrases();
+    </script>
+</body>
+</html>
