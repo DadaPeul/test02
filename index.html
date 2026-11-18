@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dada Peul : lexique pulaar, phrases, recettes et contes du Sénégal, utilisable hors ligne.">
+    <meta name="theme-color" content="#00853F">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <title>Dada Peul - Pulaar, Culture & Sénégal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="senegal-bar"></div>
+
+    <header>
+        <div class="logo-container">D</div>
+        <h1>Dada Peul</h1>
+        <div class="header-weather">
+            <span>📍 Popenguine</span>
+            <span id="weatherTempHeader" style="font-weight: 700; color: var(--secondary);">--°C</span>
+            <span id="weatherWindHeader" style="opacity: 0.95; font-size: 12px;">Vent: -- km/h</span>
+        </div>
+        <a class="header-credit" href="https://commons.wikimedia.org/wiki/File:La_falaise_de_popenguine_01.jpg" target="_blank" rel="noopener">Photo : Wikimedia Commons</a>
+    </header>
+
+    <main>
+        <!-- ACCUEIL -->
+        <div id="home" class="tab-content active">
+            <h2 style="font-size: 20px; margin-bottom: 8px;">Bienvenue sur Dada Peul !</h2>
+            <p style="font-size: 14px; color: var(--gray); margin-bottom: 20px;">Sélectionnez une thématique ci-dessous pour commencer :</p>
+            <div class="home-grid">
+                <div class="home-pill-card" onclick="switchTab('lexicon')"><div class="home-pill-icon">📖</div><div class="home-pill-title">Lexique Pulaar</div></div>
+                <div class="home-pill-card" onclick="switchTab('phrases')"><div class="home-pill-icon">💬</div><div class="home-pill-title">Phrases</div></div>
+                <div class="home-pill-card" onclick="switchTab('converter')"><div class="home-pill-icon">💶</div><div class="home-pill-title">Convertisseur</div></div>
+                <div class="home-pill-card" onclick="switchTab('recipes')"><div class="home-pill-icon">🍲</div><div class="home-pill-title">Recettes</div></div>
+                <div class="home-pill-card" onclick="switchTab('stories')"><div class="home-pill-icon">📚</div><div class="home-pill-title">Contes</div></div>
+                <div class="home-pill-card" onclick="switchTab('quiz')"><div class="home-pill-icon">🎯</div><div class="home-pill-title">Quiz</div></div>
+            </div>
+        </div>
+
+        <!-- LEXIQUE -->
+        <div id="lexicon" class="tab-content">
+            <input type="search" id="searchInput" aria-label="Rechercher un mot" class="search-box" placeholder="Rechercher un mot..." oninput="filterLexicon()">
+            <div class="categories-grid">
+                <button type="button" class="category-pill-btn active" onclick="filterCategory('all', this)">⭐ Tous</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('fav', this)">❤️ Favoris</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Salutations', this)">👋 Salutations</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Famille', this)">👨‍👩‍👧 Famille</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Transports', this)">🚗 Transports</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Cuisine', this)">🍲 Cuisine</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Santé', this)">🏥 Santé</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Météo', this)">☀️ Météo</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Sport', this)">⚽ Sport</button>
+                <button type="button" class="category-pill-btn" onclick="filterCategory('Vêtements', this)">👕 Vêtements</button>
+            </div>
+            <div id="lexiconContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- PHRASES -->
+        <div id="phrases" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px;">💬 Phrases Courantes</h2>
+            <div id="phrasesContainer" class="cards-grid"></div>
+        </div>
+
+        <!-- CONVERTISSEUR -->
+        <div id="converter" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px; text-align: center;">💱 Convertisseur de Devises</h2>
+            <div class="converter-card">
+                <div class="converter-group">
+                    <label style="font-size: 13px; font-weight:700; color:var(--primary);">Euros (€)</label>
+                    <div class="converter-row"><input type="text" id="eurInput" class="converter-input" placeholder="Ex: 10" oninput="convertEurToFcfa()"><span class="converter-unit">€</span></div>
+                </div>
+                <div style="text-align: center; font-size: 22px; margin: 5px 0; color:var(--gray);">⇅</div>
+                <div class="converter-group">
+                    <label style="font-size: 13px; font-weight:700; color:var(--accent);">Francs CFA (FCFA)</label>
+                    <div class="converter-row"><input type="text" id="fcfaInput" class="converter-input" placeholder="Ex: 6 560" oninput="convertFcfaToEur()"><span class="converter-unit">FCFA</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECETTES -->
+        <div id="recipes" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px;">🍲 Recettes & Boissons</h2>
+            <div id="recipesContainer"></div>
+        </div>
+
+        <!-- CONTES -->
+        <div id="stories" class="tab-content">
+            <h2 style="margin-bottom: 15px; font-size: 20px;">📚 Contes Sénégalais</h2>
+            <div id="storiesContainer"></div>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz" class="tab-content">
+            <div class="quiz-card">
+                <h3 id="quizQuestion" style="font-size: 18px; margin-bottom: 10px;">Chargement...</h3>
+                <p id="quizScore" style="font-size: 13px; color: var(--gray); margin-bottom: 15px;"></p>
+                <div id="quizOptions"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- NAVIGATION BASSE -->
+    <nav class="bottom-nav" aria-label="Navigation principale">
+        <button class="nav-item active" onclick="switchTab('home')"><span class="icon">🏠</span>Accueil</button>
+        <button class="nav-item" onclick="switchTab('lexicon')"><span class="icon">📖</span>Lexique</button>
+        <button class="nav-item" onclick="switchTab('phrases')"><span class="icon">💬</span>Phrases</button>
+        <button class="nav-item" onclick="switchTab('recipes')"><span class="icon">🍲</span>Recettes</button>
+        <button class="nav-item" onclick="switchTab('stories')"><span class="icon">📚</span>Contes</button>
+        <button class="nav-item" onclick="switchTab('quiz')"><span class="icon">🎯</span>Quiz</button>
+    </nav>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
