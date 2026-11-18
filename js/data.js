@@ -219,49 +219,12 @@ const lexiconData = [
   {
     "title": "Yassa Poulet au citron",
     "wolof": "Yassa Genaar",
-    "servings": "4 à 6 pers.",
-    "time": "Marinade 4 h · cuisson 1h15",
-    "level": "Facile",
     "img": "https://commons.wikimedia.org/wiki/Special:FilePath/Plat_de_yassa.jpg?width=800",
     "credit": "https://commons.wikimedia.org/wiki/File:Plat_de_yassa.jpg",
-    "ingredients": [
-      {
-        "group": "Marinade",
-        "items": [
-          "1,5 kg de poulet découpé (ou cuisses)",
-          "6 gros oignons émincés (≈ 1 kg)",
-          "Jus de 5 citrons",
-          "3 c. à soupe de moutarde",
-          "4 gousses d'ail écrasées",
-          "1 piment entier",
-          "3 c. à soupe d'huile",
-          "Sel, poivre"
-        ]
-      },
-      {
-        "group": "Cuisson et service",
-        "items": [
-          "1 feuille de laurier",
-          "1 cube de bouillon",
-          "200 ml d'eau",
-          "Olives vertes (facultatif)",
-          "500 g de riz blanc"
-        ]
-      }
-    ],
-    "steps": [
-      "Mélangez les oignons, le jus de citron, la moutarde, l'ail, le piment, l'huile, le sel et le poivre. Ajoutez le poulet et massez bien. Laissez mariner au moins 4 heures, idéalement une nuit au frais.",
-      "Sortez le poulet de la marinade et égouttez-le. Gardez les oignons et le jus.",
-      "Faites griller le poulet : au four à 220 °C pendant 25 à 30 minutes en le retournant, ou sur le barbecue, jusqu'à belle coloration.",
-      "Dans une cocotte avec un peu d'huile, faites revenir les oignons égouttés 10 minutes à feu moyen en remuant.",
-      "Versez le jus de marinade, le laurier, le cube et l'eau. Laissez mijoter 20 minutes.",
-      "Ajoutez le poulet grillé et poursuivez 20 à 25 minutes à feu doux, jusqu'à ce que les oignons soient fondants et la sauce courte.",
-      "Goûtez : rectifiez en sel, citron ou piment, ajoutez les olives. Servez sur du riz blanc."
-    ],
-    "tips": [
-      "Si la sauce est trop acide, ajoutez une pincée de sucre.",
-      "Beaucoup d'oignons est la clé : ils doivent presque fondre."
-    ]
+    "linkOnly": true,
+    "source": "https://africa-cuisine.com/fr/recipe/poulet-yassa/",
+    "source_name": "Africa-Cuisine",
+    "summary": "Poulet mariné au citron et à la moutarde, mijoté dans une sauce aux oignons et aux olives, servi sur du riz."
   },
   {
     "title": "Mafé (sauce d'arachide)",

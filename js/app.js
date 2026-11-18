@@ -95,8 +95,24 @@ let currentCategory = 'all';
             `).join('');
         }
 
+        function recipeLinkCard(r) {
+            return `
+                <article class="recipe-card">
+                    ${r.img ? `<img src="${r.img}" alt="${esc(r.title)}" class="recipe-img" loading="lazy" onerror="this.classList.add('broken')">` : ''}
+                    <div class="recipe-header">
+                        <h3 style="font-size: 18px; margin-bottom: 2px;">${esc(r.title)}</h3>
+                        <p style="font-size: 12px; opacity: 0.9;">Tradition : ${esc(r.wolof)}</p>
+                    </div>
+                    ${r.credit ? `<div class="recipe-credit">Photo : <a href="${r.credit}" target="_blank" rel="noopener">Wikimedia Commons</a> (auteur et licence sur la page)</div>` : ''}
+                    <div style="padding: 20px;">
+                        <p style="font-size: 14px; line-height: 1.6; margin-bottom: 14px;">${esc(r.summary)}</p>
+                        <a class="story-btn" style="display:inline-block; text-decoration:none;" href="${r.source}" target="_blank" rel="noopener">📖 Voir la recette sur ${esc(r.source_name)}</a>
+                    </div>
+                </article>`;
+        }
+
         function renderRecipes() {
-            document.getElementById('recipesContainer').innerHTML = recipesData.map(r => `
+            document.getElementById('recipesContainer').innerHTML = recipesData.map(r => r.linkOnly ? recipeLinkCard(r) : `
                 <article class="recipe-card">
                     ${r.img ? `<img src="${r.img}" alt="${esc(r.title)}" class="recipe-img" loading="lazy" onerror="this.classList.add('broken')">` : ''}
                     <div class="recipe-header">
@@ -117,6 +133,7 @@ let currentCategory = 'all';
                         <div class="recipe-label" style="margin-top:16px;">Préparation</div>
                         <div class="recipe-steps"><ol>${r.steps.map(st => `<li>${esc(st)}</li>`).join('')}</ol></div>
                         ${r.tips.map(t => `<div class="recipe-tip">💡 ${esc(t)}</div>`).join('')}
+                        ${r.source ? `<p class="recipe-credit" style="padding:10px 0 0;">Recette adaptée de <a href="${r.source}" target="_blank" rel="noopener">${esc(r.source_name)}</a></p>` : ''}
                     </div>
                 </article>
             `).join('');
