@@ -101,10 +101,11 @@ let currentCategory = 'all';
                     ${r.img ? `<img src="${r.img}" alt="${esc(r.title)}" class="recipe-img" loading="lazy" onerror="this.classList.add('broken')">` : ''}
                     <div class="recipe-header">
                         <h3 style="font-size: 18px; margin-bottom: 2px;">${esc(r.title)}</h3>
-                        <p style="font-size: 12px; opacity: 0.9;">Tradition : ${esc(r.wolof)}</p>
+                        ${r.wolof ? `<p style="font-size: 12px; opacity: 0.9;">Tradition : ${esc(r.wolof)}</p>` : ''}
                     </div>
                     ${r.credit ? `<div class="recipe-credit">Photo : <a href="${r.credit}" target="_blank" rel="noopener">Wikimedia Commons</a> (auteur et licence sur la page)</div>` : ''}
                     <div style="padding: 20px;">
+                        ${r.kind ? `<span class="pill pill-gold" style="margin-bottom:10px;">${esc(r.kind)}</span>` : ''}
                         <p style="font-size: 14px; line-height: 1.6; margin-bottom: 14px;">${esc(r.summary)}</p>
                         <a class="story-btn" style="display:inline-block; text-decoration:none;" href="${r.source}" target="_blank" rel="noopener">📖 Voir la recette sur ${esc(r.source_name)}</a>
                     </div>

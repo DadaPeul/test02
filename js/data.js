@@ -153,174 +153,78 @@ const lexiconData = [
 
         const recipesData = [
   {
-    "title": "Ceebu Jën (Thiéboudienne rouge)",
+    "title": "Ceebu Jën (Thiéboudienne)",
+    "kind": "🍽️ Plat",
+    "linkOnly": true,
+    "summary": "Le plat national du Sénégal : poisson farci d'herbes et légumes mijotés dans une sauce tomate, servis sur du riz.",
+    "source": "https://africa-cuisine.com/fr/recipe/tiep-bou-dien-ou-thieboudiene/",
+    "source_name": "Africa-Cuisine",
     "wolof": "Plat national du Sénégal",
-    "servings": "6 pers.",
-    "time": "Prépa 40 min · cuisson 1h30",
-    "level": "Moyen",
     "img": "https://commons.wikimedia.org/wiki/Special:FilePath/Plat_ceebu_jen.jpg?width=800",
-    "credit": "https://commons.wikimedia.org/wiki/File:Plat_ceebu_jen.jpg",
-    "ingredients": [
-      {
-        "group": "Poisson et rof (farce)",
-        "items": [
-          "1 kg de thiof (ou mérou, dorade) en tranches épaisses",
-          "1 bouquet de persil",
-          "6 gousses d'ail",
-          "1 oignon",
-          "1 piment entier",
-          "Sel, poivre"
-        ]
-      },
-      {
-        "group": "Sauce",
-        "items": [
-          "150 ml d'huile d'arachide",
-          "2 oignons émincés",
-          "3 c. à soupe de concentré de tomate",
-          "1 tomate fraîche",
-          "1,5 L d'eau",
-          "1 cube de bouillon"
-        ]
-      },
-      {
-        "group": "Légumes",
-        "items": [
-          "1 manioc",
-          "3 carottes",
-          "1/4 de chou",
-          "2 navets",
-          "2 aubergines"
-        ]
-      },
-      {
-        "group": "Riz",
-        "items": [
-          "600 g de riz brisé (ou riz long à défaut)",
-          "1 citron pour servir"
-        ]
-      }
-    ],
-    "steps": [
-      "Préparez le rof : mixez ou pilez le persil, l'ail, 1 oignon, le piment, le sel et le poivre en une pâte épaisse.",
-      "Inciser chaque tranche de poisson et la farcir de rof. Laissez reposer 30 minutes au frais.",
-      "Faites chauffer l'huile dans une grande marmite et dorez le poisson 3 à 4 minutes par face. Réservez-le.",
-      "Dans la même huile, faites revenir les oignons émincés 5 minutes, puis le concentré de tomate 10 minutes en remuant, jusqu'à ce que l'huile remonte en surface.",
-      "Ajoutez la tomate fraîche, l'eau, le cube et le reste du rof. Portez à ébullition.",
-      "Plongez d'abord le manioc et les carottes (15 min), puis les navets, le chou et les aubergines (20 min). Retirez les légumes dès qu'ils sont tendres et réservez-les avec le poisson, que vous aurez remis 10 minutes dans la sauce.",
-      "Filtrez environ 1 L de bouillon. Lavez le riz trois fois, mettez-le dans une casserole et mouillez-le avec le bouillon juste à hauteur. Couvrez et cuisez à feu doux 20 à 25 minutes en remuant à mi-cuisson.",
-      "Servez le riz dans un grand plat, disposez poisson et légumes dessus, avec des quartiers de citron."
-    ],
-    "tips": [
-      "Le riz brisé absorbe mieux la sauce, c'est ce qui fait la différence.",
-      "Le riz croustillant du fond de la marmite (xoon) est le morceau préféré de beaucoup de convives."
-    ]
+    "credit": "https://commons.wikimedia.org/wiki/File:Plat_ceebu_jen.jpg"
   },
   {
     "title": "Yassa Poulet au citron",
-    "wolof": "Yassa Genaar",
-    "img": "https://commons.wikimedia.org/wiki/Special:FilePath/Plat_de_yassa.jpg?width=800",
-    "credit": "https://commons.wikimedia.org/wiki/File:Plat_de_yassa.jpg",
+    "kind": "🍽️ Plat",
     "linkOnly": true,
+    "summary": "Poulet mariné au citron et à la moutarde, mijoté dans une sauce aux oignons et aux olives, servi sur du riz.",
     "source": "https://africa-cuisine.com/fr/recipe/poulet-yassa/",
     "source_name": "Africa-Cuisine",
-    "summary": "Poulet mariné au citron et à la moutarde, mijoté dans une sauce aux oignons et aux olives, servi sur du riz."
+    "wolof": "Yassa Genaar",
+    "img": "https://commons.wikimedia.org/wiki/Special:FilePath/Plat_de_yassa.jpg?width=800",
+    "credit": "https://commons.wikimedia.org/wiki/File:Plat_de_yassa.jpg"
   },
   {
-    "title": "Mafé (sauce d'arachide)",
+    "title": "Mafé Poulet",
+    "kind": "🍽️ Plat",
+    "linkOnly": true,
+    "summary": "Poulet mijoté dans une sauce épaisse à la pâte d'arachide, avec des légumes, à servir avec du riz.",
+    "source": "https://africa-cuisine.com/fr/recipe/mafe-poulet-a-la-senegalaise/",
+    "source_name": "Africa-Cuisine",
     "wolof": "Maafe",
-    "servings": "6 pers.",
-    "time": "Prépa 30 min · cuisson 1h30",
-    "level": "Facile",
     "img": "https://commons.wikimedia.org/wiki/Special:FilePath/Plat_s%C3%A9n%C3%A9galais_maf%C3%A9.jpg?width=800",
-    "credit": "https://commons.wikimedia.org/wiki/File:Plat_s%C3%A9n%C3%A9galais_maf%C3%A9.jpg",
-    "ingredients": [
-      {
-        "group": "Base",
-        "items": [
-          "800 g de bœuf (paleron ou jarret) en cubes",
-          "3 c. à soupe d'huile",
-          "2 oignons",
-          "3 gousses d'ail",
-          "2 c. à soupe de concentré de tomate",
-          "1 tomate",
-          "1 L d'eau ou de bouillon",
-          "150 g de pâte d'arachide non sucrée",
-          "1 piment entier",
-          "Sel, poivre"
-        ]
-      },
-      {
-        "group": "Légumes",
-        "items": [
-          "2 patates douces",
-          "3 carottes",
-          "2 navets",
-          "1/4 de chou",
-          "1 aubergine"
-        ]
-      },
-      {
-        "group": "Service",
-        "items": [
-          "500 g de riz blanc"
-        ]
-      }
-    ],
-    "steps": [
-      "Saisissez les cubes de bœuf dans l'huile chaude, 10 minutes, jusqu'à belle coloration.",
-      "Ajoutez les oignons et l'ail hachés, faites revenir 5 minutes, puis le concentré de tomate 5 minutes en remuant.",
-      "Ajoutez la tomate coupée, l'eau, le sel et le poivre. Couvrez et laissez mijoter 40 minutes.",
-      "Délayez la pâte d'arachide dans une louche de bouillon chaud, puis versez-la dans la marmite en remuant.",
-      "Ajoutez patates douces, carottes et navets. Cuisez 20 minutes.",
-      "Ajoutez le chou, l'aubergine et le piment entier, sans le percer. Cuisez encore 15 minutes à feu doux en remuant souvent pour que le fond n'accroche pas.",
-      "La sauce est prête quand elle est épaisse et que l'huile d'arachide remonte en surface. Servez sur du riz blanc."
-    ],
-    "tips": [
-      "Choisissez une pâte d'arachide 100 % arachide, sans sucre.",
-      "Gardez le piment entier : il parfume sans rendre le plat trop fort."
-    ]
+    "credit": "https://commons.wikimedia.org/wiki/File:Plat_s%C3%A9n%C3%A9galais_maf%C3%A9.jpg"
   },
   {
-    "title": "Thiakry (couscous de mil sucré)",
-    "wolof": "Cakri",
-    "servings": "6 pers.",
-    "time": "Prépa 40 min · repos 2 h",
-    "level": "Facile",
-    "img": null,
-    "credit": null,
-    "ingredients": [
-      {
-        "group": "Grains",
-        "items": [
-          "500 g de thiakry (couscous de mil précuit, en épicerie africaine)",
-          "Un peu d'eau"
-        ]
-      },
-      {
-        "group": "Crème",
-        "items": [
-          "500 g de yaourt nature (ou lait caillé, kosam)",
-          "1 boîte de lait concentré sucré (≈ 400 g)",
-          "2 c. à soupe de sucre vanillé",
-          "1 c. à café de noix de muscade",
-          "50 g de raisins secs",
-          "1 c. à soupe d'eau de fleur d'oranger (facultatif)"
-        ]
-      }
-    ],
-    "steps": [
-      "Humidifiez les grains du bout des doigts avec un peu d'eau et égrenez-les pour casser les paquets.",
-      "Cuisez-les à la vapeur 20 minutes dans un couscoussier, en les égrenant à mi-cuisson.",
-      "Étalez les grains sur un plat et laissez-les refroidir complètement, c'est important.",
-      "Mélangez le yaourt, le lait concentré, le sucre vanillé, la muscade, les raisins et la fleur d'oranger.",
-      "Incorporez délicatement cette crème aux grains froids avec une fourchette, sans écraser.",
-      "Placez au réfrigérateur au moins 2 heures. Servez bien frais en coupes."
-    ],
-    "tips": [
-      "On peut remplacer le yaourt par du lait caillé pour une version plus traditionnelle.",
-      "Se déguste en dessert après un repas copieux ou lors des fêtes."
-    ]
+    "title": "Mafé Bœuf",
+    "kind": "🍽️ Plat",
+    "linkOnly": true,
+    "summary": "La version au bœuf du ragoût à la pâte d'arachide, avec des légumes, à déguster sur du riz.",
+    "source": "https://africa-cuisine.com/fr/recipe/mafe-boeuf-a-la-senegalaise/",
+    "source_name": "Africa-Cuisine",
+    "wolof": "Maafe"
+  },
+  {
+    "title": "Riz Jollof",
+    "kind": "🍽️ Plat",
+    "linkOnly": true,
+    "summary": "Riz parfumé cuit dans une sauce tomate relevée, un plat de fête très répandu en Afrique de l'Ouest.",
+    "source": "https://africa-cuisine.com/fr/recipe/jollof-rice-riz-jollof/",
+    "source_name": "Africa-Cuisine"
+  },
+  {
+    "title": "Thiakry (dégué)",
+    "kind": "🍮 Dessert",
+    "linkOnly": true,
+    "summary": "Dessert frais à base de semoule de mil, de laitage et de lait sucré, avec des raisins secs.",
+    "source": "https://africa-cuisine.com/fr/recipe/thiakry-degue-dessert-africain-a-la-semoule-de-mil/",
+    "source_name": "Africa-Cuisine"
+  },
+  {
+    "title": "Bissap",
+    "kind": "🍹 Boisson",
+    "linkOnly": true,
+    "summary": "Boisson rouge rafraîchissante préparée avec des fleurs d'hibiscus, très populaire au Sénégal.",
+    "source": "https://africa-cuisine.com/fr/recipe/bissap-jus-dhibiscus/",
+    "source_name": "Africa-Cuisine"
+  },
+  {
+    "title": "Bouye",
+    "kind": "🍹 Boisson",
+    "linkOnly": true,
+    "summary": "Jus onctueux préparé avec la pulpe du fruit du baobab, aussi appelé pain de singe.",
+    "source": "https://africa-cuisine.com/fr/recipe/bouye-jus-de-baobab/",
+    "source_name": "Africa-Cuisine"
   }
 ];
 
