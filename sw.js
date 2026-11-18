@@ -1,5 +1,5 @@
-const C = 'dada-peul-v4';
-const A = ['./', 'index.html', 'css/style.css', 'js/data.js', 'js/app.js', 'manifest.webmanifest', 'icon.svg'];
+const C = 'dada-peul-v5';
+const A = ['./', 'index.html', 'css/style.css', 'js/data.js', 'js/app.js', 'manifest.webmanifest', 'icon.svg', 'header.jpg'];
 self.addEventListener('install', e => e.waitUntil(caches.open(C).then(c => c.addAll(A))));
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(k => Promise.all(k.filter(x => x !== C).map(x => caches.delete(x))))));
 self.addEventListener('fetch', e => {
